@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:modern_world_clock/main_navigation.dart';
 import 'package:modern_world_clock/screens/current_location.dart';
-import 'package:modern_world_clock/screens/dashboard.dart';
 
 void main() {
   runApp(ProviderScope(child: const MyApp()));
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
           seedColor: const Color.fromARGB(255, 238, 237, 240),
         ),
       ),
-      home: const CurrentLocation(),
+      home: const MainNavigation(),
     );
   }
 }
