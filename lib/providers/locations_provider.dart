@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:modern_world_clock/models/world_time.dart';
-import 'dart:async'; // Add this import at the top!
+import 'dart:async';
 
 class LocationManager extends StateNotifier<List<WorldTime>> {
   Timer? _timer;
@@ -45,17 +45,16 @@ class LocationManager extends StateNotifier<List<WorldTime>> {
     }
     state = [...state];
 
-    // Start ticking every 1 second after fetching initial data!
     startTimer();
   }
 
   void startTimer() {
-    _timer?.cancel(); // Cancel any previous timer if running
+    _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       for (var city in state) {
         city.tick();
       }
-      // Notify Riverpod that data changed so the UI rebuilds!
+
       state = [...state];
     });
   }
