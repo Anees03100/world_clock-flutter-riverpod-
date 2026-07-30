@@ -10,13 +10,8 @@ class MainNavigation extends StatefulWidget {
 }
 
 class _MainNavigationState extends State<MainNavigation> {
-  // Defaults to index 2 (Globe icon / Dashboard screen) as shown in your design
   int _selectedIndex = 2;
 
-  // Mapping screens according to your exact rules:
-  // Index 0 (Search Icon) -> Coming Soon Text
-  // Index 1 (Clock Icon)  -> CurrentLocation Screen
-  // Index 2 (Globe Icon)  -> Dashboard Screen
   late final List<Widget> _screens = [
     const Center(
       child: Text(
