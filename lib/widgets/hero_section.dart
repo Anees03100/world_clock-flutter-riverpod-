@@ -9,7 +9,8 @@ class HeroSection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final locations = ref.watch(locationProvider);
-    final is24Hour = ref.watch(toggleColorProvider); // false = 12H, true = 24H
+    final is24Hour = ref.watch(toggleColorProvider);
+
     if (locations.isEmpty || locations.first.currentDateTime == null) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -22,9 +23,15 @@ class HeroSection extends ConsumerWidget {
       if (hourInt == 0) hourInt = 12;
     }
     String hour = hourInt < 10 ? '0$hourInt' : '$hourInt';
-
     String minute = now.minute < 10 ? '0${now.minute}' : '${now.minute}';
-    String second = now.second < 10 ? '0${now.second}' : '${now.second}';
+
+    int currentSec = now.second;
+    int prevSec = currentSec == 0 ? 59 : currentSec - 1; // Decrement
+    int nextSec = currentSec == 59 ? 0 : currentSec + 1; // Increment
+
+    String currentSecStr = currentSec.toString().padLeft(2, '0');
+    String prevSecStr = prevSec.toString().padLeft(2, '0');
+    String nextSecStr = nextSec.toString().padLeft(2, '0');
 
     const weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
     const months = [
@@ -53,11 +60,14 @@ class HeroSection extends ConsumerWidget {
           children: [
             Text(
               hour,
-              style: TextStyle(fontSize: 118, fontWeight: FontWeight.bold),
+              style: const TextStyle(
+                fontSize: 118,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             Text(
               minute,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 118,
                 fontWeight: FontWeight.bold,
                 height: 0.1,
@@ -68,29 +78,66 @@ class HeroSection extends ConsumerWidget {
         const Spacer(),
         Column(
           crossAxisAlignment: CrossAxisAlignment.end,
-
           children: [
             Text(
               weekday,
-              style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
             ),
             Text(
               date,
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 20),
+
             Container(
               width: 80,
               height: 148,
               decoration: BoxDecoration(
-                color: Color(0xffE0DFDE),
+                color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 15,
+                    spreadRadius: 1,
+                    offset: const Offset(0, 5),
+                  ),
+                ],
               ),
-              child: Center(
-                child: Text(
-                  second,
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    prevSecStr,
+                    style: TextStyle(fontSize: 20, color: Colors.grey.shade400),
+                  ),
+                  Divider(
+                    color: Colors.grey.shade300,
+                    thickness: 1,
+                    indent: 20,
+                    endIndent: 20,
+                    height: 24,
+                  ),
+                  Text(
+                    currentSecStr,
+                    style: const TextStyle(
+                      fontSize: 26,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                  Divider(
+                    color: Colors.grey.shade300,
+                    thickness: 1,
+                    indent: 20,
+                    endIndent: 20,
+                    height: 24,
+                  ),
+                  Text(
+                    nextSecStr,
+                    style: TextStyle(fontSize: 20, color: Colors.grey.shade400),
+                  ),
+                ],
               ),
             ),
           ],

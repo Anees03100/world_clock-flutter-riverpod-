@@ -59,7 +59,7 @@ class CurrentLocation extends ConsumerWidget {
                                 ),
                                 child: Center(
                                   child: Text(
-                                    "12H",
+                                    "24H",
                                     style: TextStyle(
                                       color: toggle
                                           ? Colors.white
@@ -88,7 +88,7 @@ class CurrentLocation extends ConsumerWidget {
                                 ),
                                 child: Center(
                                   child: Text(
-                                    "24H",
+                                    "12H",
                                     style: TextStyle(
                                       color: toggle
                                           ? Colors.black
