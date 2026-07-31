@@ -1,18 +1,39 @@
 import 'package:flutter/material.dart';
 
-class SearchScreen extends StatelessWidget {
+class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
+
+  @override
+  State<SearchScreen> createState() => _SearchScreenState();
+}
+
+class _SearchScreenState extends State<SearchScreen> {
+  late TextEditingController searchController;
+
+  @override
+  void initState() {
+    super.initState();
+    searchController = TextEditingController();
+
+    searchController.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      // 1. This prevents the keyboard from crushing your 50/50 layout!
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Column(
           children: [
-            // --- TOP HALF (BLACK AREA) ---
             Expanded(
               flex: 1,
               child: Container(
@@ -35,17 +56,17 @@ class SearchScreen extends StatelessWidget {
                         color: Colors.white.withOpacity(0.03),
                       ),
                     ),
-                    const Align(
+                    Align(
                       alignment: Alignment.bottomLeft,
                       child: Padding(
-                        padding: EdgeInsets.only(
+                        padding: const EdgeInsets.only(
                           left: 30,
                           right: 30,
                           bottom: 40,
                         ),
                         child: Text(
-                          "Where to\nnext?",
-                          style: TextStyle(
+                          "Where to\nnext? ${searchController.text}",
+                          style: const TextStyle(
                             color: Colors.white,
                             fontSize: 48,
                             fontWeight: FontWeight.bold,
@@ -59,7 +80,6 @@ class SearchScreen extends StatelessWidget {
               ),
             ),
 
-            // --- BOTTOM HALF (WHITE SEARCH AREA) ---
             Expanded(
               flex: 1,
               child: Container(
@@ -71,14 +91,13 @@ class SearchScreen extends StatelessWidget {
                     topRight: Radius.circular(40),
                   ),
                 ),
-                // 2. We wrap the inner column in a SingleChildScrollView
                 child: SingleChildScrollView(
                   padding: const EdgeInsets.all(30),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // --- THE SEARCH FIELD ---
                       TextField(
+                        controller: searchController,
                         cursorColor: Colors.black,
                         style: const TextStyle(
                           fontSize: 18,
@@ -106,7 +125,6 @@ class SearchScreen extends StatelessWidget {
 
                       const SizedBox(height: 30),
 
-                      // --- POPULAR CITIES SECTION ---
                       Text(
                         "POPULAR",
                         style: TextStyle(
@@ -131,7 +149,6 @@ class SearchScreen extends StatelessWidget {
 
                       const SizedBox(height: 40),
 
-                      // --- RECENT SEARCHES SECTION ---
                       Text(
                         "RECENT",
                         style: TextStyle(
@@ -142,9 +159,6 @@ class SearchScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 10),
-
-                      // 3. We use shrinkWrap and NeverScrollableScrollPhysics
-                      // so the ListView sizes itself properly inside the SingleChildScrollView
                       ListView(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
