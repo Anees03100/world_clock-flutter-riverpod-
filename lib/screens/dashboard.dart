@@ -33,7 +33,7 @@ class _DashboardState extends ConsumerState<Dashboard> {
               border: Border.all(color: Colors.grey.shade300),
               borderRadius: BorderRadius.circular(50),
             ),
-            child: const Center(child: Icon(Icons.add, color: Colors.black)),
+            child: const Center(child: Icon(Icons.search, color: Colors.black)),
           ),
           const SizedBox(width: 20),
         ],

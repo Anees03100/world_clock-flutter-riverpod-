@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:modern_world_clock/screens/current_location.dart';
 import 'package:modern_world_clock/screens/dashboard.dart';
+import 'package:modern_world_clock/screens/search_screen.dart';
 
 class MainNavigation extends StatefulWidget {
   const MainNavigation({super.key});
@@ -13,12 +14,7 @@ class _MainNavigationState extends State<MainNavigation> {
   int _selectedIndex = 2;
 
   late final List<Widget> _screens = [
-    const Center(
-      child: Text(
-        'Screen coming soon',
-        style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-      ),
-    ),
+    const SearchScreen(),
     const CurrentLocation(),
     const Dashboard(),
   ];
